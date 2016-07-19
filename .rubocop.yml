@@ -1,0 +1,15 @@
+Rails:
+  Enabled: true
+
+Metrics/LineLength:
+  Max: 150
+
+Metrics/AbcSize:
+  Max: 20
+
+MethodLength:
+  Max: 35
+
+Documentation:
+  Enabled: false
+

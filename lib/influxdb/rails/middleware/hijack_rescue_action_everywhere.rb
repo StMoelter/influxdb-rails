@@ -8,6 +8,7 @@ module InfluxDB
         end
 
         private
+
         def rescue_action_in_public_with_influxdb(e)
           handle_exception(e)
           rescue_action_in_public_without_influxdb(e)
@@ -29,4 +30,3 @@ module InfluxDB
     end
   end
 end
-

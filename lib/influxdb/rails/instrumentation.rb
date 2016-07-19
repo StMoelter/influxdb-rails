@@ -2,13 +2,13 @@ module InfluxDB
   module Rails
     module Instrumentation
       def benchmark_for_instrumentation
-        start = Time.now
+        start = Time.now.utc
         yield
 
         unless InfluxDB::Rails.configuration.ignore_current_environment?
-          elapsed = ((Time.now - start) * 1000).ceil
-          InfluxDB::Rails.client.write_point "instrumentation",
-            :value => elapsed, :method => "#{controller_name}##{action_name}", :server => Socket.gethostname
+          elapsed = ((Time.now.utc - start) * 1000).ceil
+          InfluxDB::Rails.client.write_point 'instrumentation',
+                                             value: elapsed, method: "#{controller_name}##{action_name}", server: Socket.gethostname
         end
       end
 
@@ -19,7 +19,7 @@ module InfluxDB
       module ClassMethods
         def instrument(methods = [])
           methods = [methods] unless methods.is_a?(Array)
-          around_filter :benchmark_for_instrumentation, :only => methods
+          around_filter :benchmark_for_instrumentation, only: methods
         end
       end
     end
